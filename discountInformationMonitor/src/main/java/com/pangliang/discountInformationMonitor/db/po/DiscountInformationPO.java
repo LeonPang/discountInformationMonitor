@@ -1,5 +1,8 @@
 package com.pangliang.discountInformationMonitor.db.po;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,4 +26,10 @@ public class DiscountInformationPO {
     //
     private String price;
 
+
+
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this,
+                ToStringStyle.MULTI_LINE_STYLE);
+    }
 }

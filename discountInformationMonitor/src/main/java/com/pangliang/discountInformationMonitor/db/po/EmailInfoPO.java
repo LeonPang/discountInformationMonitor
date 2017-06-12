@@ -1,5 +1,8 @@
 package com.pangliang.discountInformationMonitor.db.po;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,4 +22,12 @@ public class EmailInfoPO {
     private String privateCode;
     //接收邮箱，可配置多个用 ; 分隔 第一个为接收人其他为抄送人
     private String receiveEmails;
+
+
+
+
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this,
+                ToStringStyle.MULTI_LINE_STYLE);
+    }
 }

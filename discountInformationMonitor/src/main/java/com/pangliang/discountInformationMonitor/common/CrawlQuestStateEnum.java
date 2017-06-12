@@ -8,12 +8,13 @@ public enum CrawlQuestStateEnum {
     SLEEP(2,"休眠"),
     STOPPED(3,"注销");
 
-    private int type;
-    private String desc;
+    public int type;
+    public String desc;
 
     private CrawlQuestStateEnum(int type,String desc){
         this.type = type;
         this.desc = desc;
     }
+
 
 }

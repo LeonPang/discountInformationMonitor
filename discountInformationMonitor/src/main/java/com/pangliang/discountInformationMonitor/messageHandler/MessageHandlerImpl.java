@@ -12,22 +12,9 @@ import java.util.Map;
 /**
  * Created by Administrator on 2017/6/11 0011.
  */
-public class MessageHandlerImpl extends Thread implements MessageHandler {
+public class MessageHandlerImpl {
     private Logger logger =  LoggerFactory.getLogger(this.getClass());
     private Map<Long,List<DiscountInformationPO>> discountInformationMap = new HashMap<>();
 
-    @Override
-    public void run()
-    {
-        while (true) {
-            try {
-                discountInformationMap = Constants.discountInformationQueue.take();
-
-
-            } catch (Exception e) {
-                logger.error("MessageHandlerImpl error :" + e);
-            }
-        }
-    }
 
 }

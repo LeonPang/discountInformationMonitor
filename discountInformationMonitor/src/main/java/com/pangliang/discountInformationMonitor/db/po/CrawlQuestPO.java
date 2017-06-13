@@ -1,11 +1,14 @@
 package com.pangliang.discountInformationMonitor.db.po;
 
+import com.pangliang.discountInformationMonitor.common.Constants;
+import com.pangliang.discountInformationMonitor.common.CrawlQuestStateEnum;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2017/6/11 0011.
@@ -20,18 +23,25 @@ public class CrawlQuestPO {
     private String commodityName;
     //商品型号
     private String commodityModel;
-    //商品品牌
-    private String commodityBrand;
-    //搜索源 CommoditySourceEnum
+    //商品类型
+    private String searchContent;
+
+    //价格区间等等
+
+    //频道，地区，商城等等筛选信息先不做 后面补充
+
+
+
+    //搜索源 CommoditySourceEnum 当都有时会在两个集合中都生成任务
     private int commoditySource;
     //
-    private int createTime;
+    private Date createTime;
     //
-    private int lastUpdateTime;
+    private Date lastUpdateTime;
     //监控间隔 不能小于Constants.crawlsMinSleepTime
-    private int interval;
+    private int interval = Constants.crawlsMinSleepTime;
     //状态 CrawlQuestStateEnum
-    private Integer state;
+    private Integer state = CrawlQuestStateEnum.RUNNING.type;
 
     public long getId() {
         return id;
@@ -57,12 +67,12 @@ public class CrawlQuestPO {
         this.commodityModel = commodityModel;
     }
 
-    public String getCommodityBrand() {
-        return commodityBrand;
+    public String getSearchContent() {
+        return searchContent;
     }
 
-    public void setCommodityBrand(String commodityBrand) {
-        this.commodityBrand = commodityBrand;
+    public void setSearchContent(String searchContent) {
+        this.searchContent = searchContent;
     }
 
     public int getCommoditySource() {
@@ -73,19 +83,19 @@ public class CrawlQuestPO {
         this.commoditySource = commoditySource;
     }
 
-    public int getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(int createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public int getLastUpdateTime() {
+    public Date getLastUpdateTime() {
         return lastUpdateTime;
     }
 
-    public void setLastUpdateTime(int lastUpdateTime) {
+    public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
 

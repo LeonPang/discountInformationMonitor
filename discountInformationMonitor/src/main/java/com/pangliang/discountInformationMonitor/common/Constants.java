@@ -28,9 +28,13 @@ public class Constants {
 
     //目前的爬虫信息，运行中，暂停和销毁状态的都在这里，开机从库里查一次，以后每次成功保存更新到数据库后更新此MAP对应爬虫任务
     //供每个任务的处理线程操作
-    public static final ConcurrentMap<Long,CrawlQuestPO> crawlQuestPOHashMap = new ConcurrentHashMap<>();
+    public static final ConcurrentMap<Long,CrawlQuestPO> SMZDMCrawlQuestPOHashMap = new ConcurrentHashMap<>();
+    //供每个任务的处理线程操作
+    public static final ConcurrentMap<Long,CrawlQuestPO> XIANYUCrawlQuestPOHashMap = new ConcurrentHashMap<>();
     //爬取到优惠信息的阻塞队列,大小不限制
     public static final BlockingQueue<Map<Long,List<DiscountInformationPO>>> discountInformationQueue = new LinkedBlockingQueue<Map<Long,List<DiscountInformationPO>>>();
 
+    public static final String SMZDMURL = "http://search.smzdm.com/";//http://search.smzdm.com/?c=home&s=%E6%89%8B%E6%9C%BA
+    public static final String XYURL = "https://s.2.taobao.com/";//https://s.2.taobao.com/list/list.htm?q=%CA%D6%BB%FA&search_type=item&app=shopsearch
 
 }

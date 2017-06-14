@@ -9,10 +9,12 @@ import com.pangliang.discountInformationMonitor.common.Constants;
 import com.pangliang.discountInformationMonitor.common.CrawlQuestStateEnum;
 import com.pangliang.discountInformationMonitor.db.po.CrawlQuestPO;
 import com.pangliang.discountInformationMonitor.db.po.DiscountInformationPO;
+import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
@@ -26,6 +28,7 @@ import java.util.*;
 /**
  * Created by Administrator on 2017/6/11 0011.
  */
+@Deprecated
 public class XIANYUMonitor extends Thread
 {
     //定时查询是否有对现有关键字的新增修改删除，每个关键字线程都有一个唯一的UUID
@@ -69,14 +72,14 @@ public class XIANYUMonitor extends Thread
                 .setDefaultRequestConfig(requestConfig)
                 .build();
 
-        // 创建HttpClientBuilder
+//        创建HttpClientBuilder
 //        HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-        // HttpClient
 //        CloseableHttpClient closeableHttpClient = httpClientBuilder.build();
-        // 依次是目标请求地址，端口号,协议类型
+//         依次是目标请求地址，端口号,协议类型
 //        HttpHost target = new HttpHost(url, 443,"https");
-        // 依次是代理地址，代理端口号，协议类型
-//        HttpHost proxy = new HttpHost("117.143.109.159", 80);
+//        HttpHost target = new HttpHost(url);
+//         依次是代理地址，代理端口号，协议类型
+//        HttpHost proxy = new HttpHost("113.238.13.103", 80);
 //        RequestConfig config = RequestConfig.custom().setProxy(proxy).build();
 
 
@@ -89,7 +92,7 @@ public class XIANYUMonitor extends Thread
         httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36");
         try {
             CloseableHttpResponse response = httpClient.execute(httpGet);
-//            CloseableHttpResponse response = closeableHttpClient.execute(target, httpGet);
+//            CloseableHttpResponse response = closeableHttpClient.execute(httpGet);
             System.out.println(String.valueOf(response.getStatusLine().getStatusCode()));
             if(HttpStatus.OK.toString().equals(String.valueOf(response.getStatusLine().getStatusCode()))){
                 jsonStr = EntityUtils.toString(response.getEntity(), "utf-8");
@@ -137,6 +140,15 @@ public class XIANYUMonitor extends Thread
                     getJson();
                     analyzeJson();
                     while (crawlNextPage) {
+                        try
+                        {
+                            logger.info("此处为调用加载信息，注意要休眠不然很快就会被封掉IP 暂定20S");
+                            Thread.sleep(20000);
+                        }
+                        catch (InterruptedException e)
+                        {
+                        }
+
                         url = Constants.XYWaterFallURL + ++currentPageNo + "&_ksTS=" + new Date().getTime() + "_" + (new Random().nextInt(500) + 1) + "&callback=&stype=1&st_edtime=1&q=" + UrlUtil.getURLEncoderString(crawlQuestPO.getSearchContent()) + "&ist=1";
                         getJson();
                         analyzeJson();
@@ -160,7 +172,7 @@ public class XIANYUMonitor extends Thread
                 try
                 {
                     logger.info("ID为" + crawlQuestID + "的XIANYU爬虫本次任务处理完成 开始休眠");
-                    Thread.sleep(Constants.crawlsMinSleepTime);
+                    Thread.sleep(Constants.XIANYUCrawlsMinSleepTime);
                 }
                 catch (InterruptedException e)
                 {
@@ -174,17 +186,25 @@ public class XIANYUMonitor extends Thread
         //每5分钟爬一次
         //第一次默认爬当天0点以后的，所以当发现遇到1天前的停止
         //第二次开始更新了5分钟，所以爬到5分钟之前停止
-        if(!"".equals(jsonStr)) {
+        if(!"".equals(jsonStr) && !jsonStr.contains("anti_Spider")) {
             JsonParser parse = new JsonParser();  //创建json解析器
-            JsonObject jsonObject = (JsonObject)parse.parse(jsonStr.substring(1,jsonStr.length()-1));
-            JsonObject numFound = jsonObject.get("numFound").getAsJsonObject();
-            JsonObject currPage = jsonObject.get("currPage").getAsJsonObject();
-            JsonObject totalPage = jsonObject.get("totalPage").getAsJsonObject();
+            String jsonStrS = jsonStr.replace("\n","").replace("\t","").replace("\r","");
+            jsonStrS = jsonStrS.substring(1,jsonStrS.length()-1);
+            JsonObject jsonObject = (JsonObject)parse.parse(jsonStrS);
+            String numFound = jsonObject.get("numFound").getAsString();
+            String currPage = jsonObject.get("currPage").getAsString();
+            String totalPage = jsonObject.get("totalPage").getAsString();
             //ershou和idle都是一个集合，我只看idle,每次最多返回20个
 //            JsonObject ershouCount = jsonObject.get("ershouCount").getAsJsonObject();
-            JsonObject idleCount = jsonObject.get("idleCount").getAsJsonObject();
+            String idleCount = jsonObject.get("idleCount").getAsString();
 //            JsonObject ershou = jsonObject.get("ershou").getAsJsonObject();
             JsonArray idle = jsonObject.get("idle").getAsJsonArray();
+            if("0".equals(numFound)){
+                crawlNextPage = false;
+                lastCrawlDate = new Date().getTime();
+                currentPageNo = 1;
+                return;
+            }
             for (int i = 0; i < idle.size(); i++) {
                 JsonObject tmp = idle.get(i).getAsJsonObject();
                 JsonObject user = tmp.get("user").getAsJsonObject();
@@ -226,6 +246,13 @@ public class XIANYUMonitor extends Thread
                 lastCrawlDate = new Date().getTime();
                 currentPageNo = 1;
             }
+        }else{
+            if(!"".equals(jsonStr) && jsonStr.contains("anti_Spider")){
+                logger.info("被封了");
+            }
+            crawlNextPage = false;
+            lastCrawlDate = new Date().getTime();
+            currentPageNo = 1;
         }
     }
 

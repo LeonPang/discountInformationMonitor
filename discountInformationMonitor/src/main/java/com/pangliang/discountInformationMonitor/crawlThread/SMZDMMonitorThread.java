@@ -152,61 +152,48 @@ public class SMZDMMonitorThread  extends Thread
             //默认是按照时间顺序的，每次获取时间后与上次时间比较，只有比上次时间新的才有效，到小于等于上次时间就停止查询了
             if (null != items && items.size() > 0) {
                 for (Element item : items) {
-                    System.out.println(item.select("a.feed-nowrap").attr("title"));
-                    System.out.println(item.select("a.feed-nowrap").attr("href"));
-                    System.out.println(item.select("div.z-highlight").text());
-                    System.out.println(item.select("div.feed-block-descripe").text());
-                    System.out.println(item.select("span.feed-block-extras span").text());
-                    //清除SPAN后即可得到纯净的时间
+                    String shopName = item.select("span.feed-block-extras span").text();
                     item.select("span.feed-block-extras span").remove();
-                    System.out.println(item.select("span.feed-block-extras").text());
+                    String time = item.select("span.feed-block-extras").text().trim();
+                    //日期格式为2016-04-01 表示今年以前
+                    long tempDate = 0L;
+                    if (time.length() == 10) {
+                        tempDate = simpleDateFormat.parse(item.select("span.feed-block-extras").text().trim() + " 00:00").getTime();
+
+                    }else if (time.length() == 11) {
+                        //日期格式为06-13 17:43 表示今年内非今天
+                        tempDate = simpleDateFormat.parse(simpleDateFormat.format(new Date()).substring(0,5) + time).getTime();
+                    }else if (time.length() == 5) {
+                        //日期格式为17:43 表示今天
+                        tempDate = simpleDateFormat.parse(simpleDateFormat.format(new Date()).substring(0,11) + time).getTime();
+                    }
+                    if(tempDate <= lastCrawlDate){
+                        crawlNextPage = false;
+                        break;
+                    }
                     //只关心 发现优惠 国内优惠 海淘优惠三种
                     //其实日期判断有没有 -  有几个 - 即可判断
-                    if("".equals(item.select("span.search-faxian-mark").text()) && "".equals(item.select("span.search-guonei-mark").text()) && "".equals(item.select("span.search-haitao-mark").text())){
+                    if(!"".equals(item.select("span.search-faxian-mark").text()) || !"".equals(item.select("span.search-guonei-mark").text()) || !"".equals(item.select("span.search-haitao-mark").text())){
+                        discountInformationPO = new DiscountInformationPO();
+                        discountInformationPO.setTitle(item.select("a.feed-nowrap").attr("title"));
+                        discountInformationPO.setURL(item.select("a.feed-nowrap").attr("href"));
+                        discountInformationPO.setAcquiredDate(new Date().getTime());
+                        discountInformationPO.setPrice(item.select("div.z-highlight").text());
+                        discountInformationPO.setCrawlQuestID(crawlQuestID);
+                        discountInformationPO.setDesc(item.select("div.feed-block-descripe").text());
+                        discountInformationPO.setShopName(shopName);
                         //日期格式为2016-04-01 表示今年以前
-                        long tempDate = 0L;
                         if (item.select("span.feed-block-extras").text().trim().length() == 10) {
-                            tempDate = simpleDateFormat.parse(item.select("span.feed-block-extras").text().trim() + " 00:00:01").getTime();
+                            discountInformationPO.setPublishDate(simpleDateFormat.parse(item.select("span.feed-block-extras").text().trim() + " 00:00:01").getTime());
 
                         }else if (item.select("span.feed-block-extras").text().trim().length() == 11) {
                             //日期格式为06-13 17:43 表示今年内非今天
-                            tempDate = simpleDateFormat.parse(simpleDateFormat.format(new Date()).substring(0,5) + item.select("span.feed-block-extras").text().trim()).getTime();
+                            discountInformationPO.setPublishDate(simpleDateFormat.parse(simpleDateFormat.format(new Date()).substring(0,5) + item.select("span.feed-block-extras").text().trim()).getTime());
                         }else{
                             //日期格式为17:43 表示今天
-                            tempDate = simpleDateFormat.parse(simpleDateFormat.format(new Date()).substring(0,11) + item.select("span.feed-block-extras").text().trim()).getTime();
+                            discountInformationPO.setPublishDate(simpleDateFormat.parse(simpleDateFormat.format(new Date()).substring(0,11) + item.select("span.feed-block-extras").text().trim()).getTime());
                         }
-                        if(tempDate <= lastCrawlDate){
-                            crawlNextPage = false;
-                            break;
-                        }
-                    }
-
-                    discountInformationPO = new DiscountInformationPO();
-                    discountInformationPO.setTitle(item.select("a.feed-nowrap").attr("title"));
-                    discountInformationPO.setURL(item.select("a.feed-nowrap").attr("href"));
-                    discountInformationPO.setAcquiredDate(new Date().getTime());
-                    discountInformationPO.setPrice(item.select("div.z-highlight").text());
-                    discountInformationPO.setCrawlQuestID(crawlQuestID);
-                    discountInformationPO.setDesc(item.select("div.feed-block-descripe").text());
-                    discountInformationPO.setShopName(item.select("span.feed-block-extras span").text());
-                    //日期格式为2016-04-01 表示今年以前
-                    if (item.select("span.feed-block-extras").text().trim().length() == 10) {
-                        discountInformationPO.setPublishDate(simpleDateFormat.parse(item.select("span.feed-block-extras").text().trim() + " 00:00:01").getTime());
-
-                    }else if (item.select("span.feed-block-extras").text().trim().length() == 11) {
-                        //日期格式为06-13 17:43 表示今年内非今天
-                        discountInformationPO.setPublishDate(simpleDateFormat.parse(simpleDateFormat.format(new Date()).substring(0,5) + item.select("span.feed-block-extras").text().trim()).getTime());
-                    }else{
-                        //日期格式为17:43 表示今天
-                        discountInformationPO.setPublishDate(simpleDateFormat.parse(simpleDateFormat.format(new Date()).substring(0,11) + item.select("span.feed-block-extras").text().trim()).getTime());
-                    }
-
-
-                    //并不是只有等到这里才判断，因为选择的是看综合什么都会有，如果恰好全是综合没用三种优惠之一，就不会进入这里
-                    if(discountInformationPO.getPublishDate() <= lastCrawlDate){
-                        crawlNextPage = false;
-                        break;
-                    }else{
+                        logger.info("ID为" + crawlQuestID + "的SMZDM爬虫本次任务获取到一条有效信息：" + discountInformationPO);
                         discountInformationPOList.add(discountInformationPO);
                     }
                 }

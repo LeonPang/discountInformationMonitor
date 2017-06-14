@@ -87,13 +87,13 @@ public class SMZDMMonitorThread  extends Thread
         {
             crawlQuestPO = Constants.SMZDMCrawlQuestPOHashMap.get(crawlQuestID);
             if(null == crawlQuestPO || null == crawlQuestPO.getState() ||crawlQuestPO.getState() == CrawlQuestStateEnum.STOPPED.type){
-                logger.info("ID为" + crawlQuestID + "的爬虫任务已销毁 crawlQuestPO：" + crawlQuestPO);
+                logger.info("ID为" + crawlQuestID + "的SMZDM爬虫任务已销毁 crawlQuestPO：" + crawlQuestPO);
                 running = false;
             }else  if (crawlQuestPO.getState() == CrawlQuestStateEnum.SLEEP.type)
             {
                 try
                 {
-                    logger.info("ID为" + crawlQuestID + "的爬虫任务已暂停 开始休眠");
+                    logger.info("ID为" + crawlQuestID + "的SMZDM爬虫任务已暂停 开始休眠");
                     Thread.sleep(Constants.crawlsMinSleepTime);
                 }
                 catch (InterruptedException e)
@@ -129,11 +129,11 @@ public class SMZDMMonitorThread  extends Thread
                         }
                     }
                 }catch(Exception e){
-                    logger.error("ID为" + crawlQuestID + "的爬虫处理爬取到的信息时异常 error:" + e);
+                    logger.error("ID为" + crawlQuestID + "的SMZDM爬虫处理爬取到的信息时异常 error:" + e);
                 }
                 try
                 {
-                    logger.info("ID为" + crawlQuestID + "的爬虫本次任务处理完成 开始休眠");
+                    logger.info("ID为" + crawlQuestID + "的SMZDM爬虫本次任务处理完成 开始休眠");
                     Thread.sleep(Constants.crawlsMinSleepTime);
                 }
                 catch (InterruptedException e)

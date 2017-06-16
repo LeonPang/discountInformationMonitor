@@ -1,10 +1,6 @@
 package com.pangliang.discountInformationMonitor;
 
-import com.pangliang.discountInformationMonitor.common.Constants;
-import com.pangliang.discountInformationMonitor.common.CrawlQuestStateEnum;
-import com.pangliang.discountInformationMonitor.crawlThread.SMZDMMonitorThread;
-import com.pangliang.discountInformationMonitor.crawlThread.XIANYUMonitor;
-import com.pangliang.discountInformationMonitor.db.po.CrawlQuestPO;
+import com.pangliang.discountInformationMonitor.crawlThread.JD618Thread;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -13,94 +9,51 @@ public class DiscountInformationMonitorApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DiscountInformationMonitorApplication.class, args);
-		CrawlQuestPO crawlQuestPO = new CrawlQuestPO();
+
+//		CrawlQuestPO crawlQuestPO = new CrawlQuestPO();
 //		crawlQuestPO.setId(1);
 //		crawlQuestPO.setState(CrawlQuestStateEnum.RUNNING.type);
 //		crawlQuestPO.setSearchContent("微波炉");
-//		Constants.SMZDMCrawlQuestPOHashMap.put(crawlQuestPO.getId(),crawlQuestPO);
-//		SMZDMMonitorThread t = new SMZDMMonitorThread(crawlQuestPO.getId());
-//		Thread t1=new Thread(t);
-//		t1.start();
-//		crawlQuestPO = new CrawlQuestPO();
-//		crawlQuestPO.setId(2);
-//		crawlQuestPO.setState(CrawlQuestStateEnum.RUNNING.type);
-//		crawlQuestPO.setSearchContent("手机");
-//		Constants.SMZDMCrawlQuestPOHashMap.put(crawlQuestPO.getId(),crawlQuestPO);
-//		t = new SMZDMMonitorThread(crawlQuestPO.getId());
-//		t1=new Thread(t);
-//		t1.start();
-//		crawlQuestPO = new CrawlQuestPO();
-//		crawlQuestPO.setId(3);
-//		crawlQuestPO.setState(CrawlQuestStateEnum.RUNNING.type);
-//		crawlQuestPO.setSearchContent("床");
-//		Constants.SMZDMCrawlQuestPOHashMap.put(crawlQuestPO.getId(),crawlQuestPO);
-//		t = new SMZDMMonitorThread(crawlQuestPO.getId());
-//		t1=new Thread(t);
-//		t1.start();
-//		crawlQuestPO = new CrawlQuestPO();
-//		crawlQuestPO.setId(4);
-//		crawlQuestPO.setState(CrawlQuestStateEnum.RUNNING.type);
-//		crawlQuestPO.setSearchContent("耳机");
-//		Constants.SMZDMCrawlQuestPOHashMap.put(crawlQuestPO.getId(),crawlQuestPO);
-//		t = new SMZDMMonitorThread(crawlQuestPO.getId());
-//		t1=new Thread(t);
-//		t1.start();
-//		crawlQuestPO = new CrawlQuestPO();
-//		crawlQuestPO.setId(5);
-//		crawlQuestPO.setState(CrawlQuestStateEnum.RUNNING.type);
-//		crawlQuestPO.setSearchContent("键盘");
-//		Constants.SMZDMCrawlQuestPOHashMap.put(crawlQuestPO.getId(),crawlQuestPO);
-//		t = new SMZDMMonitorThread(crawlQuestPO.getId());
-//		t1=new Thread(t);
-//		t1.start();
-//		crawlQuestPO = new CrawlQuestPO();
-//		crawlQuestPO.setId(6);
-//		crawlQuestPO.setState(CrawlQuestStateEnum.RUNNING.type);
-//		crawlQuestPO.setSearchContent("显卡");
-//		Constants.SMZDMCrawlQuestPOHashMap.put(crawlQuestPO.getId(),crawlQuestPO);
-//		t = new SMZDMMonitorThread(crawlQuestPO.getId());
-//		t1=new Thread(t);
-//		t1.start();
-//		crawlQuestPO = new CrawlQuestPO();
-//		crawlQuestPO.setId(7);
-//		crawlQuestPO.setState(CrawlQuestStateEnum.RUNNING.type);
-//		crawlQuestPO.setSearchContent("自行车");
-//		Constants.SMZDMCrawlQuestPOHashMap.put(crawlQuestPO.getId(),crawlQuestPO);
-//		t = new SMZDMMonitorThread(crawlQuestPO.getId());
-//		t1=new Thread(t);
-//		t1.start();
-//		crawlQuestPO = new CrawlQuestPO();
-//		crawlQuestPO.setId(8);
-//		crawlQuestPO.setState(CrawlQuestStateEnum.RUNNING.type);
-//		crawlQuestPO.setSearchContent("玩具");
-//		Constants.SMZDMCrawlQuestPOHashMap.put(crawlQuestPO.getId(),crawlQuestPO);
-//		t = new SMZDMMonitorThread(crawlQuestPO.getId());
-//		t1=new Thread(t);
-//		t1.start();
-//		crawlQuestPO = new CrawlQuestPO();
-//		crawlQuestPO.setId(9);
-//		crawlQuestPO.setState(CrawlQuestStateEnum.RUNNING.type);
-//		crawlQuestPO.setSearchContent("乐器");
-//		Constants.SMZDMCrawlQuestPOHashMap.put(crawlQuestPO.getId(),crawlQuestPO);
-//		t = new SMZDMMonitorThread(crawlQuestPO.getId());
-//		t1=new Thread(t);
-//		t1.start();
-//		crawlQuestPO = new CrawlQuestPO();
-//		crawlQuestPO.setId(10);
-//		crawlQuestPO.setState(CrawlQuestStateEnum.RUNNING.type);
-//		crawlQuestPO.setSearchContent("食品");
-//		Constants.SMZDMCrawlQuestPOHashMap.put(crawlQuestPO.getId(),crawlQuestPO);
-//		t = new SMZDMMonitorThread(crawlQuestPO.getId());
-//		t1=new Thread(t);
-//		t1.start();
+//		Constants.XIANYUCrawlQuestPOHashMap.put(1L,crawlQuestPO);
+//		Constants.SMZDMCrawlQuestPOHashMap.put(1L,crawlQuestPO);
+////		SMZDMMonitorThread t = new SMZDMMonitorThread(crawlQuestPO.getId());
+//		XIANYUMonitor t = new XIANYUMonitor(crawlQuestPO.getId());
 
-		//测试咸鱼
-		crawlQuestPO.setId(1);
-		crawlQuestPO.setState(CrawlQuestStateEnum.RUNNING.type);
-		crawlQuestPO.setSearchContent("微波炉");
-		Constants.XIANYUCrawlQuestPOHashMap.put(crawlQuestPO.getId(),crawlQuestPO);
-		XIANYUMonitor t = new XIANYUMonitor(crawlQuestPO.getId());
-		Thread t1=new Thread(t);
+		String url1 = "https://coupon.jd.com/ilink/couponSendFront/send_index.action?key=5295463f6ce84ae8afce9624093e2fab&roleId=6932641&to=sale.jd.com/act/bgx0ywve5awmvnx";
+		String refer1 = "https://sale.jd.com/act/ahvzjpgme3jw.html";
+		String cookie1 = "sid=3e5febeb43821c4c2a00f7e4fc9d0e8e; mt_xid=V2_52007VwMSVllQW14cTxxsUW8FQFVeXVFGSBoZCRliU0JTQQtRXBlVTlVWYAtHVlQPVV4YeRpdBWEfE1VBWVpLH0wSWANsBxJiX2hRahtKH1wAYDMSVlw%3D; user-key=1e55c3dd-84e3-4e3c-bc60-423499169dac; unpl=V2_ZzNtbRcHFxZ3WEddfh5YA2JWG1xKAkEUfQpGVS9MWlY3CxMJclRCFXMUR1NnGVgUZwQZXEVcQxJFCHZXchBYAWcCGllyBBNNIEwHDCRSBUE3XHxcFVUWF3RaTwEoSVoAYwtBDkZUFBYhW0IAKElVVTUFR21yVEMldQl2VHsdWA1uBxFbR2dzEkU4dlF%2fEVQEVwIiXHIVF0l2AUBdfhkRBWcHFlVLU0ATcDhHZHg%3d; ipLocation=%u8FBD%u5B81; areaId=8; __jdv=122270672|baidu-pinzhuan|t_288551095_baidupinzhuan|cpc|0f3d30c8dba7459bb52f2eb5eba8ac7d_0_dae23a0846574d809d309310ed7ba90e|1497514314624; cn=9; ipLoc-djd=8-579-581-40000.137868554; _jrda=1; wlfstk_smdl=bpzpsdf4ozvdupf37fyp16wzdkkxb64n; TrackID=1dQpnvKppm8GFD95Pn9MGrZHHPLz8w8_F6EZk6ygVIDcOi7pwaV5LaF93jcIW8oTtg7vwViK3EvfDzfvb29Q5bg; pinId=Xocfko8lvfw; pin=9977205; unick=%E5%B8%85%E5%BE%97%E7%8A%AF%E7%BD%AA; _tp=j%2BMoWfyeDPqfj%2BqvTMFvwA%3D%3D; _pst=9977205; ceshi3.com=103; thor=8C778E0199DDF5F1C1D09A412A1F6446414B5B02F4A0C49236313BCB138EAC9BECC13683077A1523910D6BEE6A99E0DC0CFFAA1EDF9D64BB371750261BD6B8441CBAA4B693949996CC711424B017237AA74D7488BA9BEB6E76EE350A8B5A31ABD3BB7AF75ACAA59A45B08526A0A3B107305110F2B96D11D94AA66A9CAD814DB374548DDABDC7874FB16C6080B011D53B; __jda=122270672.1155985274.1488959094.1497576377.1497591295.142; __jdb=122270672.14.1155985274|142.1497591295; __jdc=122270672; __jdu=1155985274; 3AB9D23F7A4B3C9B=WPA7R67TZQKYLH357GX47QRAEAKX4GDS7C7U6KQ4G7SHYW3YTSM7B3G4HPY35ZJ6YPLA2ZIYCT67IYMUQHLU2GSSWQ";
+		String time1 = "2017-06-16 14:59:59";
+		String name1 = "59秒页面1";
+		JD618Thread jd618Thread1 = new JD618Thread(url1,refer1,cookie1,time1,name1);
+		Thread t1 = new Thread(jd618Thread1);
 		t1.start();
+
+
+		String url2 = "https://coupon.jd.com/ilink/couponSendFront/send_index.action?key=5295463f6ce84ae8afce9624093e2fab&roleId=6932641&to=sale.jd.com/act/bgx0ywve5awmvnxp.html&";
+		String refer2 = "https://sale.jd.com/act/bgx0ywve5awmvnxp.html";
+		String cookie2 = "sid=3e5febeb43821c4c2a00f7e4fc9d0e8e; mt_xid=V2_52007VwMSVllQW14cTxxsUW8FQFVeXVFGSBoZCRliU0JTQQtRXBlVTlVWYAtHVlQPVV4YeRpdBWEfE1VBWVpLH0wSWANsBxJiX2hRahtKH1wAYDMSVlw%3D; user-key=1e55c3dd-84e3-4e3c-bc60-423499169dac; unpl=V2_ZzNtbRcHFxZ3WEddfh5YA2JWG1xKAkEUfQpGVS9MWlY3CxMJclRCFXMUR1NnGVgUZwQZXEVcQxJFCHZXchBYAWcCGllyBBNNIEwHDCRSBUE3XHxcFVUWF3RaTwEoSVoAYwtBDkZUFBYhW0IAKElVVTUFR21yVEMldQl2VHsdWA1uBxFbR2dzEkU4dlF%2fEVQEVwIiXHIVF0l2AUBdfhkRBWcHFlVLU0ATcDhHZHg%3d; ipLocation=%u8FBD%u5B81; areaId=8; __jdv=122270672|baidu-pinzhuan|t_288551095_baidupinzhuan|cpc|0f3d30c8dba7459bb52f2eb5eba8ac7d_0_dae23a0846574d809d309310ed7ba90e|1497514314624; cn=9; ipLoc-djd=8-579-581-40000.137868554; _jrda=1; wlfstk_smdl=bpzpsdf4ozvdupf37fyp16wzdkkxb64n; TrackID=1dQpnvKppm8GFD95Pn9MGrZHHPLz8w8_F6EZk6ygVIDcOi7pwaV5LaF93jcIW8oTtg7vwViK3EvfDzfvb29Q5bg; pinId=Xocfko8lvfw; pin=9977205; unick=%E5%B8%85%E5%BE%97%E7%8A%AF%E7%BD%AA; _tp=j%2BMoWfyeDPqfj%2BqvTMFvwA%3D%3D; _pst=9977205; ceshi3.com=103; thor=FAEE4FC2E9AD29271E8A754155194E201F578B05BD797DDF1492F4C61C8B44378201597A106E2526BE88B1E087CF199DC0F0FD574A3D3D67936F88D47E4D5FCAC0C765715DD8962B6EDBAC6359492EC18219AC50FCAC3107990BF649A292BB880F0AD722E3E60A01931A4C85607C48BD6D79B7B2D2CFA3F9431AD8B572CAB37E5C3189C070A02BB4F73A0040E720E276; __jda=122270672.1155985274.1488959094.1497576377.1497591295.142; __jdb=122270672.16.1155985274|142.1497591295; __jdc=122270672; 3AB9D23F7A4B3C9B=WPA7R67TZQKYLH357GX47QRAEAKX4GDS7C7U6KQ4G7SHYW3YTSM7B3G4HPY35ZJ6YPLA2ZIYCT67IYMUQHLU2GSSWQ; __jdu=1155985274";
+		String time2 = "2017-06-16 14:59:59";
+		String name2 = "59秒页面2";
+		JD618Thread jd618Thread2 = new JD618Thread(url2,refer2,cookie2,time2,name2);
+		Thread t2 = new Thread(jd618Thread2);
+		t2.start();
+
+		String url3 = "https://coupon.jd.com/ilink/couponSendFront/send_index.action?key=5295463f6ce84ae8afce9624093e2fab&roleId=6932641&to=sale.jd.com/act/bgx0ywve5awmvnx";
+		String refer3 = "https://sale.jd.com/act/ahvzjpgme3jw.html";
+		String cookie3 = "sid=3e5febeb43821c4c2a00f7e4fc9d0e8e; mt_xid=V2_52007VwMSVllQW14cTxxsUW8FQFVeXVFGSBoZCRliU0JTQQtRXBlVTlVWYAtHVlQPVV4YeRpdBWEfE1VBWVpLH0wSWANsBxJiX2hRahtKH1wAYDMSVlw%3D; user-key=1e55c3dd-84e3-4e3c-bc60-423499169dac; unpl=V2_ZzNtbRcHFxZ3WEddfh5YA2JWG1xKAkEUfQpGVS9MWlY3CxMJclRCFXMUR1NnGVgUZwQZXEVcQxJFCHZXchBYAWcCGllyBBNNIEwHDCRSBUE3XHxcFVUWF3RaTwEoSVoAYwtBDkZUFBYhW0IAKElVVTUFR21yVEMldQl2VHsdWA1uBxFbR2dzEkU4dlF%2fEVQEVwIiXHIVF0l2AUBdfhkRBWcHFlVLU0ATcDhHZHg%3d; ipLocation=%u8FBD%u5B81; areaId=8; __jdv=122270672|baidu-pinzhuan|t_288551095_baidupinzhuan|cpc|0f3d30c8dba7459bb52f2eb5eba8ac7d_0_dae23a0846574d809d309310ed7ba90e|1497514314624; cn=9; ipLoc-djd=8-579-581-40000.137868554; _jrda=1; wlfstk_smdl=bpzpsdf4ozvdupf37fyp16wzdkkxb64n; TrackID=1dQpnvKppm8GFD95Pn9MGrZHHPLz8w8_F6EZk6ygVIDcOi7pwaV5LaF93jcIW8oTtg7vwViK3EvfDzfvb29Q5bg; pinId=Xocfko8lvfw; pin=9977205; unick=%E5%B8%85%E5%BE%97%E7%8A%AF%E7%BD%AA; _tp=j%2BMoWfyeDPqfj%2BqvTMFvwA%3D%3D; _pst=9977205; ceshi3.com=103; thor=8C778E0199DDF5F1C1D09A412A1F6446414B5B02F4A0C49236313BCB138EAC9BECC13683077A1523910D6BEE6A99E0DC0CFFAA1EDF9D64BB371750261BD6B8441CBAA4B693949996CC711424B017237AA74D7488BA9BEB6E76EE350A8B5A31ABD3BB7AF75ACAA59A45B08526A0A3B107305110F2B96D11D94AA66A9CAD814DB374548DDABDC7874FB16C6080B011D53B; __jda=122270672.1155985274.1488959094.1497576377.1497591295.142; __jdb=122270672.14.1155985274|142.1497591295; __jdc=122270672; __jdu=1155985274; 3AB9D23F7A4B3C9B=WPA7R67TZQKYLH357GX47QRAEAKX4GDS7C7U6KQ4G7SHYW3YTSM7B3G4HPY35ZJ6YPLA2ZIYCT67IYMUQHLU2GSSWQ";
+		String time3 = "2017-06-16 15:00:00";
+		String name3 = "00页面1";
+		JD618Thread jd618Thread3 = new JD618Thread(url3,refer3,cookie3,time3,name3);
+		Thread t3 = new Thread(jd618Thread3);
+		t3.start();
+
+		String url4 = "https://coupon.jd.com/ilink/couponSendFront/send_index.action?key=5295463f6ce84ae8afce9624093e2fab&roleId=6932641&to=sale.jd.com/act/bgx0ywve5awmvnxp.html&";
+		String refer4 = "https://sale.jd.com/act/bgx0ywve5awmvnxp.html";
+		String cookie4 = "sid=3e5febeb43821c4c2a00f7e4fc9d0e8e; mt_xid=V2_52007VwMSVllQW14cTxxsUW8FQFVeXVFGSBoZCRliU0JTQQtRXBlVTlVWYAtHVlQPVV4YeRpdBWEfE1VBWVpLH0wSWANsBxJiX2hRahtKH1wAYDMSVlw%3D; user-key=1e55c3dd-84e3-4e3c-bc60-423499169dac; unpl=V2_ZzNtbRcHFxZ3WEddfh5YA2JWG1xKAkEUfQpGVS9MWlY3CxMJclRCFXMUR1NnGVgUZwQZXEVcQxJFCHZXchBYAWcCGllyBBNNIEwHDCRSBUE3XHxcFVUWF3RaTwEoSVoAYwtBDkZUFBYhW0IAKElVVTUFR21yVEMldQl2VHsdWA1uBxFbR2dzEkU4dlF%2fEVQEVwIiXHIVF0l2AUBdfhkRBWcHFlVLU0ATcDhHZHg%3d; ipLocation=%u8FBD%u5B81; areaId=8; __jdv=122270672|baidu-pinzhuan|t_288551095_baidupinzhuan|cpc|0f3d30c8dba7459bb52f2eb5eba8ac7d_0_dae23a0846574d809d309310ed7ba90e|1497514314624; cn=9; ipLoc-djd=8-579-581-40000.137868554; _jrda=1; wlfstk_smdl=bpzpsdf4ozvdupf37fyp16wzdkkxb64n; TrackID=1dQpnvKppm8GFD95Pn9MGrZHHPLz8w8_F6EZk6ygVIDcOi7pwaV5LaF93jcIW8oTtg7vwViK3EvfDzfvb29Q5bg; pinId=Xocfko8lvfw; pin=9977205; unick=%E5%B8%85%E5%BE%97%E7%8A%AF%E7%BD%AA; _tp=j%2BMoWfyeDPqfj%2BqvTMFvwA%3D%3D; _pst=9977205; ceshi3.com=103; thor=FAEE4FC2E9AD29271E8A754155194E201F578B05BD797DDF1492F4C61C8B44378201597A106E2526BE88B1E087CF199DC0F0FD574A3D3D67936F88D47E4D5FCAC0C765715DD8962B6EDBAC6359492EC18219AC50FCAC3107990BF649A292BB880F0AD722E3E60A01931A4C85607C48BD6D79B7B2D2CFA3F9431AD8B572CAB37E5C3189C070A02BB4F73A0040E720E276; __jda=122270672.1155985274.1488959094.1497576377.1497591295.142; __jdb=122270672.16.1155985274|142.1497591295; __jdc=122270672; 3AB9D23F7A4B3C9B=WPA7R67TZQKYLH357GX47QRAEAKX4GDS7C7U6KQ4G7SHYW3YTSM7B3G4HPY35ZJ6YPLA2ZIYCT67IYMUQHLU2GSSWQ; __jdu=1155985274";
+		String time4 = "2017-06-16 15:00:00";
+		String name4 = "00页面2";
+		JD618Thread jd618Thread4 = new JD618Thread(url4,refer4,cookie4,time4,name4);
+		Thread t4 = new Thread(jd618Thread4);
+		t4.start();
 	}
 }

@@ -50,32 +50,35 @@ public class JD618Thread extends Thread
                 e.printStackTrace();
             }
             if(time.equals(simpleDateFormat.format(new Date()))){
-                RequestConfig requestConfig = RequestConfig.custom()
-                        .setSocketTimeout(5000)   //socket超时
-                        .setConnectTimeout(5000)   //connect超时
-                        .build();
-                CloseableHttpClient httpClient = HttpClients.custom()
-                        .setDefaultRequestConfig(requestConfig)
-                        .build();
-                HttpGet httpGet = new HttpGet(url);
-                httpGet.setHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                httpGet.setHeader("Accept-Encoding", "gzip, deflate, sdch, br");
-                httpGet.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
-                httpGet.setHeader("Connection", "keep-alive");
-                httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36");
-                httpGet.setHeader("Cookie",cookie);
-                httpGet.setHeader("Referer",refer);
-                httpGet.setHeader("Host","coupon.jd.com");
-                httpGet.setHeader("Upgrade-Insecure-Requests","1");
-                try {
-                    CloseableHttpResponse response = httpClient.execute(httpGet);
-                    if(HttpStatus.OK.toString().equals(String.valueOf(response.getStatusLine().getStatusCode()))){
-                        logger.info(EntityUtils.toString(response.getEntity(), "utf-8"));
-                    }
+                for(int i = 0; i < 10; i ++){
+                    RequestConfig requestConfig = RequestConfig.custom()
+                            .setSocketTimeout(5000)   //socket超时
+                            .setConnectTimeout(5000)   //connect超时
+                            .build();
+                    CloseableHttpClient httpClient = HttpClients.custom()
+                            .setDefaultRequestConfig(requestConfig)
+                            .build();
+                    HttpGet httpGet = new HttpGet(url);
+                    httpGet.setHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    httpGet.setHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                    httpGet.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
+                    httpGet.setHeader("Connection", "keep-alive");
+                    httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36");
+                    httpGet.setHeader("Cookie",cookie);
+                    httpGet.setHeader("Referer",refer);
+                    httpGet.setHeader("Host","coupon.jd.com");
+                    httpGet.setHeader("Upgrade-Insecure-Requests","1");
+                    try {
+                        CloseableHttpResponse response = httpClient.execute(httpGet);
+                        if(HttpStatus.OK.toString().equals(String.valueOf(response.getStatusLine().getStatusCode()))){
+                            logger.info(EntityUtils.toString(response.getEntity(), "utf-8"));
+                        }
 
-                } catch (IOException e) {
-                    logger.error("error:" + e);
+                    } catch (IOException e) {
+                        logger.error("error:" + e);
+                    }
                 }
+
 
                 running = false;
                 logger.info(name + "运行结束");
